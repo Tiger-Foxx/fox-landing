@@ -121,6 +121,17 @@ const LandingPage = () => {
         <MatrixRain />  {/* Ajoutez cette ligne ici */}
         <CircuitLines />
 
+        {/* Ajout de l'avatar en arrière-plan pour mobile */}
+        <div className="absolute inset-0 md:hidden pointer-events-none z-0">
+          <div className="relative w-full h-full">
+            <img
+                src="avat.png"
+                alt="Background Fox Avatar"
+                className="absolute top-[13%] left-1/2 -translate-x-1/2 w-[150%] max-w-none opacity-[0.45] blur-[1px] cyber-avatar-background"
+            />
+          </div>
+        </div>
+
         {/* Grille cyberpunk améliorée */}
         <div className="absolute inset-0 cyber-grid opacity-30" />
 
@@ -187,7 +198,7 @@ const LandingPage = () => {
             </div>
 
             {/* Boutons d'action */}
-            <div className="flex gap-6 flex-wrap">
+            <div className="flex gap-6 flex-wrap bouton " >
               <button className="cyber-button" onClick={gotoSite}>
                 <span className="text-lg font-semibold">Accéder au site {'>'} </span>
 
