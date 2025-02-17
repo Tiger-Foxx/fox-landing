@@ -70,7 +70,7 @@ const LandingPage = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [glitchIntensity, setGlitchIntensity] = useState(1);
   const containerRef = useRef(null);
-  const SITE = 'https://site.com'
+  const SITE = 'https://theoldfox.pythonanywhere.com/'
   function  gotoSite(){
     window.location.href=SITE;
   }
