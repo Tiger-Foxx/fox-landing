@@ -1,10 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
-import {
-  Terminal, Shield, Globe, Cpu, ChevronRight, Github,
-  Linkedin, Code, Zap, Radio, Lock, Server,
-} from 'lucide-react';
-import { FaWhatsapp, FaGoogle } from 'react-icons/fa'; // Gmail et WhatsApp
-
+import  {useEffect, useRef, useState} from 'react';
+import {Cpu, Github, Globe, Lock, Server, Shield, Terminal,} from 'lucide-react';
+import {FaGoogle, FaWhatsapp} from 'react-icons/fa'; // Gmail et WhatsApp
 import MatrixRain from "./MatrixRain.tsx";
 
 const GlitchText = ({ text, intensity = 1 }) => {
@@ -116,6 +112,8 @@ const LandingPage = () => {
     { icon: Lock, text: "Sécurité Avancée", color: "#58d5c2" }
   ];
 
+  // @ts-ignore
+  // @ts-ignore
   return (
       <div ref={containerRef} className="min-h-screen bg-gray-900 text-white overflow-hidden relative">
         <MatrixRain />  {/* Ajoutez cette ligne ici */}
@@ -177,6 +175,7 @@ const LandingPage = () => {
                       key={index}
                       className="cyber-skill-card group"
                       style={{
+                        //@ts-expect-error
                         '--card-color': skill.color,
                         animationDelay: `${index * 0.1}s`
                       }}
