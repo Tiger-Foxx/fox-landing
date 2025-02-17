@@ -1,95 +1,209 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react';
 import {
-  Terminal,
-  Shield,
-  Globe,
-  Cpu,
-  ChevronRight,
-  Github,
-  Linkedin
-} from 'lucide-react'
+  Terminal, Shield, Globe, Cpu, ChevronRight, Github,
+  Linkedin, Code, Zap, Radio, Lock, Server,
+} from 'lucide-react';
+import { FaWhatsapp, FaGoogle } from 'react-icons/fa'; // Gmail et WhatsApp
 
-const LandingPage = () => {
-  const [isLoaded, setIsLoaded] = useState(false)
+import MatrixRain from "./MatrixRain.tsx";
+
+const GlitchText = ({ text, intensity = 1 }) => {
+  const [glitchState, setGlitchState] = useState(false);
 
   useEffect(() => {
-    setIsLoaded(true)
-  }, [])
+    const glitchInterval = setInterval(() => {
+      setGlitchState(true);
+      setTimeout(() => setGlitchState(false), 150 * intensity);
+    }, Math.random() * 3000 + 1000);
+
+    return () => clearInterval(glitchInterval);
+  }, [intensity]);
 
   return (
-      <div className="min-h-screen bg-gray-900 text-white overflow-hidden relative">
-        {/* Grille cyberpunk */}
+      <div className="glitch-container">
+      <span className={`glitch-text ${glitchState ? 'active' : ''}`} data-text={text}>
+        {text}
+      </span>
+      </div>
+  );
+};
+
+const HackerMessage = () => {
+  const messages = [
+    "Infiltration en cours...",
+    "Bypassing security...",
+    "Access granted...",
+    "System compromised...",
+    "Data extraction: 98%"
+  ];
+  const [currentMessage, setCurrentMessage] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentMessage((prev) => (prev + 1) % messages.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+      <div className="typing-effect text-[#58d5c2] text-sm font-mono">
+        {messages[currentMessage]}
+      </div>
+  );
+};
+
+const CircuitLines = () => (
+    <div className="absolute inset-0 circuit-lines opacity-20">
+      {[...Array(20)].map((_, i) => (
+          <div
+              key={i}
+              className="circuit-line"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                width: `${Math.random() * 200 + 50}px`,
+                transform: `rotate(${Math.random() * 360}deg)`
+              }}
+          />
+      ))}
+    </div>
+);
+
+const LandingPage = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [glitchIntensity, setGlitchIntensity] = useState(1);
+  const containerRef = useRef(null);
+  const SITE = 'https://site.com'
+  function  gotoSite(){
+    window.location.href=SITE;
+  }
+  const socialLinks = [
+    { Icon: Github, url: "https://github.com/Tiger-Foxx" },
+    { Icon: FaWhatsapp, url: "https://wa.me/+237658866639" },
+    { Icon: FaGoogle, url: "mailto:donfackarthur750@gmail.com" }
+  ];
+
+  useEffect(() => {
+    setIsLoaded(true);
+    const glitchInterval = setInterval(() => {
+      setGlitchIntensity(Math.random() * 2 + 0.5);
+    }, 5000);
+
+    const handleMouseMove = (e) => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        setMousePos({
+          x: ((e.clientX - rect.left) / rect.width - 0.5) * 20,
+          y: ((e.clientY - rect.top) / rect.height - 0.5) * 20
+        });
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      clearInterval(glitchInterval);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+
+  const skills = [
+    { icon: Terminal, text: "Ingénieur mercenaire", color: "#58d5c2" },
+    { icon: Shield, text: "Hacker Éthique", color: "#58d5c2" },
+    { icon: Globe, text: "Web & Mobile", color: "#58d5c2" },
+    { icon: Cpu, text: "Solutions Desktop", color: "#58d5c2" },
+    { icon: Server, text: "Infrastructure", color: "#58d5c2" },
+    { icon: Lock, text: "Sécurité Avancée", color: "#58d5c2" }
+  ];
+
+  return (
+      <div ref={containerRef} className="min-h-screen bg-gray-900 text-white overflow-hidden relative">
+        <MatrixRain />  {/* Ajoutez cette ligne ici */}
+        <CircuitLines />
+
+        {/* Grille cyberpunk améliorée */}
         <div className="absolute inset-0 cyber-grid opacity-30" />
 
         {/* Overlay avec gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-900/50 to-gray-900" />
 
+        {/* Message secret */}
+        <div className="absolute top-5 right-5 z-20">
+          <HackerMessage />
+        </div>
+
+        {/* Logo */}
+        <div className="absolute top-5 left-5 z-20 w-16 h-16">
+          <img
+              src="logo-fox-light.png"
+              alt="Logo"
+              className="w-full h-full object-contain cyber-logo"
+          />
+        </div>
+
         {/* Contenu principal */}
         <div className="relative z-10 container mx-auto px-4 min-h-screen flex flex-col md:flex-row items-center justify-center">
-
           {/* Section gauche */}
           <div className={`w-full md:w-1/2 space-y-8 transition-all duration-1000 ${
               isLoaded ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'
           }`}>
             {/* Titre avec effet glitch */}
-            <div className="relative">
-              <h1 className="text-7xl font-bold glitch-text" data-text="FOX">
-                FOX
-              </h1>
+            <div className="relative mb-12">
+              <GlitchText text="FOX" intensity={glitchIntensity} />
+            </div>
+
+            {/* Message personnalisé */}
+            <div className="cyber-message-container p-4 border border-[#58d5c2] rounded-lg bg-gray-900/80 backdrop-blur-sm">
+              <p className="text-[#58d5c2] font-mono text-lg">
+                "Viens ! je t'emmène dans l'entre d'un renard de la tech."
+              </p>
             </div>
 
             {/* Cartes de compétences */}
-            <div className="space-y-4">
-              {[
-                { icon: <Terminal className="w-6 h-6" />, text: "Ingénieur mercenaire" },
-                { icon: <Shield className="w-6 h-6" />, text: "Hacker Éthique" },
-                { icon: <Globe className="w-6 h-6" />, text: "Web & Mobile" },
-                { icon: <Cpu className="w-6 h-6" />, text: "Solutions Desktop" }
-              ].map((item, index) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {skills.map((skill, index) => (
                   <div
                       key={index}
-                      className="scan-effect group flex items-center gap-3 p-4 rounded-lg
-                  bg-gray-800/50 backdrop-blur-sm border border-[#58d5c2]/30
-                  transition-all duration-300 hover:scale-105 hover:border-[#58d5c2]
-                  cursor-pointer"
+                      className="cyber-skill-card group"
+                      style={{
+                        '--card-color': skill.color,
+                        animationDelay: `${index * 0.1}s`
+                      }}
                   >
-                    <div className="text-[#58d5c2] group-hover:scale-110 transition-transform">
-                      {item.icon}
+                    <div className="relative flex items-center gap-3 p-4 rounded-lg
+                    bg-gray-800/50 backdrop-blur-sm border border-[#58d5c2]/30
+                    transition-all duration-300 hover:scale-105 hover:border-[#58d5c2]
+                    cursor-pointer overflow-hidden"
+                    >
+                      <div className="text-[#58d5c2] group-hover:scale-110 transition-transform">
+                        <skill.icon className="w-6 h-6" />
+                      </div>
+                      <span className="text-lg cyber-text">{skill.text}</span>
+                      <div className="cyber-card-glitch" />
+                      <div className="cyber-card-scanner" />
                     </div>
-                    <span className="text-lg">{item.text}</span>
                   </div>
               ))}
             </div>
 
             {/* Boutons d'action */}
-            <div className="flex gap-6">
-              <button
-                  onClick={() => window.location.href = '/site'}
-                  className="cyber-pulse px-8 py-4 rounded-lg bg-[#58d5c2] text-white
-                flex items-center gap-2 transition-all duration-300
-                hover:bg-[#58d5c2]/80 hover:scale-105"
-              >
-                <span className="text-lg font-semibold">Accéder au site</span>
-                <ChevronRight className="w-5 h-5 animate-bounce" />
+            <div className="flex gap-6 flex-wrap">
+              <button className="cyber-button" onClick={gotoSite}>
+                <span className="text-lg font-semibold">Accéder au site {'>'} </span>
+
+                <div className="cyber-button-glitch" />
               </button>
 
               <div className="flex gap-4">
-                {[
-                  { icon: <Github className="w-6 h-6" />, url: "https://github.com/yourusername" },
-                  { icon: <Linkedin className="w-6 h-6" />, url: "https://linkedin.com/in/yourusername" }
-                ].map((social, index) => (
-                    <a
+                {socialLinks.map(({Icon, url}, index) => (
+                    <div
                         key={index}
-                        href={social.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="cyber-pulse p-3 rounded-full bg-gray-800/50
-                    backdrop-blur-sm border border-[#58d5c2]/30
-                    transition-all duration-300 hover:scale-110
-                    hover:border-[#58d5c2]"
+                        className="cyber-social-icon cursor-pointer"
+                        onClick={() => window.open(url, "_blank")}
                     >
-                      {social.icon}
-                    </a>
+                      <Icon className="w-6 h-6"/>
+                      <div className="cyber-social-scanner"/>
+                    </div>
                 ))}
               </div>
             </div>
@@ -99,20 +213,27 @@ const LandingPage = () => {
           <div className={`w-full md:w-1/2 mt-12 md:mt-0 transition-all duration-1000 ${
               isLoaded ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
           }`}>
-            <div className="relative max-w-md mx-auto">
+            <div
+                className="relative max-w-md mx-auto"
+                style={{
+                  transform: `perspective(1000px) 
+                rotateY(${mousePos.x}deg) 
+                rotateX(${-mousePos.y}deg)`
+                }}
+            >
               <img
                   src="avat.png"
                   alt="Fox Avatar"
-                  className="w-full rounded-lg float scan-effect"
+                  className="w-full rounded-lg cyber-avatar"
               />
-              {/* Effets de lumière */}
-              <div className="absolute -inset-2 bg-[#58d5c2]/20 blur-xl -z-10" />
-              <div className="absolute -inset-1 bg-gradient-to-r from-transparent via-[#58d5c2]/10 to-transparent blur-lg" />
+              <div className="cyber-avatar-glitch" />
+              <div className="cyber-avatar-scanner" />
+              <div className="cyber-avatar-glow" />
             </div>
           </div>
         </div>
       </div>
-  )
-}
+  );
+};
 
-export default LandingPage
+export default LandingPage;
