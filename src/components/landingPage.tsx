@@ -158,15 +158,25 @@ const LandingPage = () => {
           }`}>
             {/* Titre avec effet glitch */}
             <div className="relative mb-12">
-              <GlitchText text="FOX" intensity={glitchIntensity} />
+              <GlitchText text="FOX" intensity={glitchIntensity}/>
             </div>
 
             {/* Message personnalisé */}
-            <div className="cyber-message-container p-4 border border-[#58d5c2] rounded-lg bg-gray-900/80 backdrop-blur-sm">
+            <div
+                className="cyber-message-container p-4 border border-[#58d5c2] rounded-lg bg-gray-900/80 backdrop-blur-sm">
               <p className="text-[#58d5c2] font-mono text-lg">
                 "Viens ! je t'emmène dans l'entre d'un renard de la tech."
               </p>
             </div>
+
+            <div className="boutonmobilecontainer">
+              <button className="cyber-button bouton boutonmobile" onClick={gotoSite}>
+                <span className="text-lg font-semibold">Accéder au site {'>'} </span>
+
+                <div className="cyber-button-glitch"/>
+              </button>
+            </div>
+
 
             {/* Cartes de compétences */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -186,23 +196,23 @@ const LandingPage = () => {
                     cursor-pointer overflow-hidden"
                     >
                       <div className="text-[#58d5c2] group-hover:scale-110 transition-transform">
-                        <skill.icon className="w-6 h-6" />
+                        <skill.icon className="w-6 h-6"/>
                       </div>
                       <span className="text-lg cyber-text">{skill.text}</span>
-                      <div className="cyber-card-glitch" />
-                      <div className="cyber-card-scanner" />
+                      <div className="cyber-card-glitch"/>
+                      <div className="cyber-card-scanner"/>
                     </div>
                   </div>
               ))}
             </div>
 
             {/* Boutons d'action */}
-            <div className="flex gap-6 flex-wrap bouton " >
-              <button className="cyber-button" onClick={gotoSite}>
-                <span className="text-lg font-semibold">Accéder au site {'>'} </span>
+            <div className="flex gap-6 flex-wrap">
+              {/*<button className="cyber-button bouton" onClick={gotoSite}>*/}
+              {/*  <span className="text-lg font-semibold">Accéder au site {'>'} </span>*/}
 
-                <div className="cyber-button-glitch" />
-              </button>
+              {/*  <div className="cyber-button-glitch"/>*/}
+              {/*</button>*/}
 
               <div className="flex gap-4">
                 {socialLinks.map(({Icon, url}, index) => (
