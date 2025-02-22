@@ -2,6 +2,8 @@ import  {useEffect, useRef, useState} from 'react';
 import {Cpu, Github, Globe, Lock, Server, Shield, Terminal,} from 'lucide-react';
 import {FaGoogle, FaWhatsapp} from 'react-icons/fa'; // Gmail et WhatsApp
 import MatrixRain from "./MatrixRain.tsx";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const GlitchText = ({ text, intensity = 1 }) => {
   const [glitchState, setGlitchState] = useState(false);
@@ -69,6 +71,8 @@ const LandingPage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [glitchIntensity, setGlitchIntensity] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+
   const containerRef = useRef(null);
   const SITE = 'https://theoldfox.pythonanywhere.com/'
   function  gotoSite(){
@@ -230,27 +234,50 @@ const LandingPage = () => {
           </div>
 
           {/* Section droite - Avatar */}
-          <div className={`w-full md:w-1/2 mt-12 md:mt-0 transition-all duration-1000 ${
-              isLoaded ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
-          }`}>
-            <div
-                className="relative max-w-md mx-auto"
-                style={{
-                  transform: `perspective(1000px) 
-                rotateY(${mousePos.x}deg) 
-                rotateX(${-mousePos.y}deg)`
-                }}
-            >
-              <img
-                  src="avat.png"
-                  alt="Fox Avatar"
-                  className="w-full rounded-lg cyber-avatar"
-              />
-              <div className="cyber-avatar-glitch" />
-              <div className="cyber-avatar-scanner" />
-              <div className="cyber-avatar-glow" />
-            </div>
-          </div>
+          <div
+      className={`w-full md:w-1/2 mt-12 md:mt-0 transition-all duration-1000 ${
+        isLoaded ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
+      }`}
+    >
+      <div
+        className="relative max-w-md mx-auto"
+        style={{
+          transform: `perspective(1000px) 
+                      rotateY(${mousePos.x}deg) 
+                      rotateX(${-mousePos.y}deg)`,
+        }}
+      >
+        {/* Skeleton Loader */}
+        {!isLoaded && (
+          <Skeleton
+            height={250} // Ajuste la hauteur selon ton image
+            width="100%"
+            baseColor="#1a1a1a"
+            highlightColor="#2c2c2c"
+            className="rounded-lg"
+          />
+        )}
+
+        {/* Image réelle */}
+        <img
+          src="avat.png"
+          alt="Fox Avatar"
+          className={`w-full rounded-lg cyber-avatar transition-opacity duration-500 ${
+            isLoaded ? "opacity-100" : "opacity-0"
+          }`}
+          onLoad={() => setIsLoaded(true)} // Masque le Skeleton une fois l’image chargée
+        />
+
+        {/* Effets cyber */}
+        {isLoaded && (
+          <>
+            <div className="cyber-avatar-glitch" />
+            <div className="cyber-avatar-scanner" />
+            <div className="cyber-avatar-glow" />
+          </>
+        )}
+      </div>
+    </div>
         </div>
       </div>
   );
