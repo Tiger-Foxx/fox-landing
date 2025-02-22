@@ -248,7 +248,7 @@ const LandingPage = () => {
         }}
       >
         {/* Skeleton Loader */}
-        {!isLoaded && (
+        {isLoading && (
           <Skeleton
             height={250} // Ajuste la hauteur selon ton image
             width="100%"
@@ -265,7 +265,7 @@ const LandingPage = () => {
           className={`w-full rounded-lg cyber-avatar transition-opacity duration-500 ${
             isLoaded ? "opacity-100" : "opacity-0"
           }`}
-          onLoad={() => setIsLoaded(true)} // Masque le Skeleton une fois l’image chargée
+          onLoad={() => setIsLoading(false)} // Masque le Skeleton une fois l’image chargée
         />
 
         {/* Effets cyber */}
