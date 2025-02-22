@@ -263,7 +263,7 @@ const LandingPage = () => {
           src="avat.png"
           alt="Fox Avatar"
           className={`w-full rounded-lg cyber-avatar transition-opacity duration-500 ${
-            isLoaded ? "opacity-100" : "opacity-0"
+            !isLoading ? "opacity-100" : "opacity-0"
           }`}
           onLoad={() => setIsLoading(false)} // Masque le Skeleton une fois l’image chargée
         />
