@@ -250,7 +250,7 @@ const LandingPage = () => {
         {/* Skeleton Loader */}
         {isLoading && (
           <Skeleton
-            height={250} // Ajuste la hauteur selon ton image
+            height={450} // Ajuste la hauteur selon ton image
             width="100%"
             baseColor="#1a1a1a"
             highlightColor="#2c2c2c"
