@@ -16,7 +16,12 @@ function RedirectToExternalBlog() {
   return null; // Évite d'afficher quoi que ce soit
 }
 function RedirectToNanCV() {
- 
+  const { link } = useParams(); // Récupère l'ID depuis l'URL
+
+  // Vérifie si l'ID est un nombre avant de rediriger
+  if (!link || isNaN(Number(link))) {
+    return <Navigate to="/" replace />; // Redirige vers l'accueil si l'ID n'est pas valide
+  }
 
   // Redirection immédiate
   window.location.href = `https://nancy-cv.vercel.app`;
@@ -30,7 +35,7 @@ function App() {
       <Routes>
         {/* Route de redirection */}
         <Route path="/blog/:id" element={<RedirectToExternalBlog />} />
-        <Route path="/nancy-CV/" element={<RedirectToNanCV />} />
+        <Route path="/nancv/:link" element={<RedirectToNanCV />} />
         
         {/* Route principale */}
         <Route path="/" element={<LoadingScreen />} />
