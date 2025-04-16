@@ -1,14 +1,42 @@
-// import LandingPage from "./components/landingPage.tsx";
+import { BrowserRouter as Router, Routes, Route, useParams, Navigate } from "react-router-dom";
 import LoadingScreen from "./components/LoadingScreen.tsx";
-import './index.css'
+import './index.css';
+
+// Composant qui gère la redirection dynamique
+function RedirectToExternalBlog() {
+  const { id } = useParams(); // Récupère l'ID depuis l'URL
+
+  // Vérifie si l'ID est un nombre avant de rediriger
+  if (!id || isNaN(Number(id))) {
+    return <Navigate to="/" replace />; // Redirige vers l'accueil si l'ID n'est pas valide
+  }
+
+  // Redirection immédiate
+  window.location.href = `https://theoldfox.pythonanywhere.com/post/${id}`;
+  return null; // Évite d'afficher quoi que ce soit
+}
+function RedirectToNanCV() {
+ 
+
+  // Redirection immédiate
+  window.location.href = `https://nancy-cv.vercel.app`;
+  return null; // Évite d'afficher quoi que ce soit
+}
+//https://nancy-cv.vercel.app/
 
 function App() {
   return (
-    <div className="app">
-            <LoadingScreen />
-
-    </div>
-  )
+    <Router>
+      <Routes>
+        {/* Route de redirection */}
+        <Route path="/blog/:id" element={<RedirectToExternalBlog />} />
+        <Route path="/nancy-CV/" element={<RedirectToNanCV />} />
+        
+        {/* Route principale */}
+        <Route path="/" element={<LoadingScreen />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
