@@ -1,0 +1,7 @@
+{
+    "redirects": [
+      { "source": "/blog/:id", "destination": "https://theoldfox.pythonanywhere.com/post/:id" },
+      { "source": "/nancv", "destination": "https://nancy-cv.vercel.app" },
+      { "source": "/mood-music", "destination": "https://mood-music.vercel.app" }
+    ]
+  }
